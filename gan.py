@@ -10,6 +10,7 @@ from keras.optimizers import Adam
 from keras.preprocessing.image import load_img, img_to_array
 from PIL import Image
 import os
+from keras import backend as K
 
 
 def generator_model():
@@ -38,7 +39,7 @@ def discriminator_model():
                             border_mode='same',
                             input_shape=(3, 150, 150)))
     model.add(LeakyReLU(0.2))
-    model.add(Convolution2D(256, 5, 5, subsample=(2, 2)))
+    model.add(Convolution2D(256, 5, 5, subsample=(2, 2), dim_ordering="th"))
     model.add(LeakyReLU(0.2))
     model.add(Flatten())
     model.add(Dense(512))
@@ -82,6 +83,10 @@ def train():
         X_train.append(ary_img)
     X_train = np.array(X_train)
     X_train = (X_train.astype(np.float32) - 127.5) / 127.5
+    if K.image_data_format() == "channels_first":
+        X_train = X_train.reshape(X_train.shape[0], 3, X_train.shape[1], X_train.shape[2])
+    else:
+        pass
     print(X_train.shape)
 
     discriminator = discriminator_model()

@@ -5,15 +5,14 @@
     <title>UNIQLO or YOHJI</title>
 </head>
 <body>
-{% if predict %}
-<IMG SRC="{{filepath}} " BORDER="1"> predict:{{predict}} <BR>
-<HR>
-{% endif %}
-ファイルを選択して送信してください<BR>
-<form action = "./" method = "POST">
-    enctype = "multipart/form-data">
-    <input type = "file" name = "file" />
-    <input type = "submit"/>
-</form>
+ {% if predict %}
+     <IMG SRC="{{filepath}} " BORDER="1"> 予想:{{predict}} <BR>
+     <HR>
+ {% endif %}
+ ファイルを選択して送信してください<BR>
+ <form action = "./" method = "POST" enctype = "multipart/form-data">
+     <input type = "file" name = "file" />
+     <input type = "submit"/>
+ </form>
 </body>
 </html>
